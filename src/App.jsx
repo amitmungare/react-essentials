@@ -1,43 +1,18 @@
 import "./App.css";
-import reactImg from './assets/react-core-concepts.png'
-import compImg from './assets/compImg.png'
 import { CORE_CONCEPTS } from "./data.js";
-
-
-
-const reactDescription=['Fundamental', 'Crucial', 'Core'];
-
-function genRandomInt(max){
-  return Math.floor(Math.random()*(max+1));
-}
-
-function Header() {
-
-  const description = reactDescription[genRandomInt(2)]
-
-  return (
-    <header>
-      <img src={reactImg} alt="Stylized atom" />
-      <h1>React Essentials</h1>
-      <p>
-        {description} React concepts you will need for almost any app you are
-        going to build!
-      </p>
-    </header>
-  );
-}
-
-function CoreConcept({image, title, description}){
-  return(
-    <li>
-      <img src={image} alt={title}/>
-      <h3>{title}</h3>
-      <p>{description}</p>
-    </li>
-  )
-}
+import Header from "./components/Header/Header.jsx";
+import CoreConcept from "./components/CoreConcept.jsx";
+import TabButton from "./components/TabButton.jsx";
+import { useState } from "react";
 
 function App() {
+
+  const [tabContent, setTabContent] = useState("Please click a btn")
+
+  const handleSelect=(selectedBtn)=>{
+    setTabContent(selectedBtn);
+  }
+
   return (
     <div>
       <Header/>
@@ -62,9 +37,29 @@ function App() {
               
           </ul>
         </section>
+        <section id="examples">
+              <h2>Examples</h2>
+              <menu>
+                <TabButton onSelect={()=>handleSelect("Components")}>Components</TabButton>
+                <TabButton onSelect={()=>handleSelect("JSX")}>JSX</TabButton>
+                <TabButton onSelect={()=>handleSelect("Props")}>Props</TabButton>
+                <TabButton onSelect={()=>handleSelect("State")}>State</TabButton>
+              </menu>
+
+              {tabContent}
+
+        </section>
       </main>
     </div>
   );
 }
 
 export default App;
+
+
+
+// question to nk
+// difference between (why do we have to write it as a function)?
+// How can you "configure" the execution of an event-dependent function 
+// ()=>handleSelect("Components")
+// handleSelect("Components")
